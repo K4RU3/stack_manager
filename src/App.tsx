@@ -5,19 +5,26 @@ import Dashboard from "./Dashboard";
 export default function App() {
     const [isLoading, setLoading] = useState<boolean>(true);
     const [data, setData] = useState<currentType>({});
+    const [isError, setError] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
-            let data = await getData();
-            setData(data);
-            setLoading(false);
+            getData().then(res => {
+                setData(res);
+                setLoading(false);
+            }).catch(_ => {
+                setError(true);
+                setLoading(false);
+            });
         })()
     }, []);
 
     return <>
         {
             isLoading
-            ? <p>Loading...</p>
+            ? <p>Loading...</p> 
+            : isError
+            ? <p>Error</p>
             : <Dashboard data={data} />
         }
     </>;

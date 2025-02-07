@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: process.env.development === "true"
+    baseURL: import.meta.env.MODE === "development"
     ? "localhost:5678"
     : window.location.origin
 })
