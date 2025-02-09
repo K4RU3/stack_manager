@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getData, currentType } from "./Api"
+import { getData } from "./Api"
 import Dashboard from "./Dashboard";
 
 export default function App() {
     const [isLoading, setLoading] = useState<boolean>(true);
-    const [data, setData] = useState<currentType>({});
+    const [data, setData] = useState<any>({});
     const [isError, setError] = useState<boolean>(false);
 
     useEffect(() => {
@@ -12,6 +12,7 @@ export default function App() {
             getData().then(res => {
                 setData(res);
                 setLoading(false);
+                console.log(data)
             }).catch(_ => {
                 setError(true);
                 setLoading(false);
@@ -25,7 +26,7 @@ export default function App() {
             ? <p>Loading...</p> 
             : isError
             ? <p>Error</p>
-            : <Dashboard data={data} />
+            : <Dashboard />
         }
     </>;
 }
